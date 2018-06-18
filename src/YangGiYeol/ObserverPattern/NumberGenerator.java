@@ -1,4 +1,4 @@
-package YangGiYeol;
+package YangGiYeol.ObserverPattern;
 
 import java.util.ArrayList;
 import java.util.Iterator;

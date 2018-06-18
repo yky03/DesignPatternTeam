@@ -1,4 +1,4 @@
-package YangGiYeol;
+package YangGiYeol.ObserverPattern;
 
 //간이 그래프로 수를 표시하는 클래스
 public class GraphObserver implements Observer {

@@ -1,4 +1,4 @@
-package YangGiYeol;
+package YangGiYeol.ObserverPattern;
 
 //숫자로 수를 표시하는 클래스
 public class DigitObserver implements Observer {
