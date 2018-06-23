@@ -1,0 +1,138 @@
+package strategy;
+
+public class Animal {
+	// 처음에는 cry()와 move() 메소드만을 소유 
+	void cry() {
+		
+	}
+//	void move(){
+//	
+//	}
+	// 새는 날 수 도 있지만 걸을 수 가 있다.
+	// 개 역시 걸을 수 가 있지만 달릴 수 도있다.
+	// 따라서 이러한 변경은 상속 및 형변환을 통한 오버라이딩으로 
+	// 표현이 힘들며 코드 중복이 일어날 수 있는 가능성이 높다.
+	// 따라서 불가피하게 부모클래스의 변경이 이루어져야만 한다.
+	// => 이러한 변경은 전체적인 자식클래스의 변경을 동반하기에 좋은 선택이 아니다.
+	// 이러한 코드를 의존성이 높다라고 한다.
+	//void fly();
+	
+	// 메소드 요구사항의 변경으로 인하여 부모클래스가 수정되는 일을 최소화하기 위하여, 
+	// 클래스 간에 인터페이스를 이용, Decoupling을 하여 의존성을 낮출 수 있도록 하는 
+	// 디자인 패턴을 전략패턴이라고 한다.
+
+
+	
+	public IMoveBehaviour imb;
+	public IMoveBehaviour imb1;
+	
+	public String howToMove() {
+		return imb.move();
+	}
+	public String howToMove1() {
+		return imb1.move();
+	}
+	
+	public void setMove(IMoveBehaviour newMove) {
+		
+		imb = newMove;
+	}
+}
+
+package strategy;
+
+public class AnimalMain {
+	public static void main(String[] args) {
+		Animal 바둑이 = new Dog();
+		Animal 까치 = new Bird();
+		
+		System.out.println("개는 "+바둑이.howToMove());
+		System.out.println("개는 "+바둑이.howToMove1());
+		System.out.println("새는 "+까치.howToMove());
+		System.out.println("새는 "+까치.howToMove1());
+		
+		바둑이.setMove(new Fly());
+		System.out.println("개는 "+바둑이.howToMove());
+		
+	}
+}
+
+
+package strategy;
+
+public class Bird extends Animal {
+
+	@Override
+	void cry() {
+		System.out.println("짹짹하고 운다.");
+	}
+
+	public Bird() {
+		super();
+		imb = new Fly();
+		imb1 = new Walk();
+	}
+//	@Override
+//	void move() {
+//		System.out.println("난다.");
+//	}
+
+//	@Override
+//	void fly() {
+//		System.out.println("난다.");
+//	}
+	
+}
+
+package strategy;
+
+public class Dog extends Animal {
+
+	@Override
+	void cry() {
+		System.out.println("멍멍 짇는다.");
+	}
+	
+	public Dog() {
+		super();
+		imb = new Walk();
+		imb1 = new Dash();
+		
+	}
+	
+//	@Override
+//	void move() {
+//		System.out.println("걷는다.");
+//	}
+	// 걷는다에서 달린다로 변경을 하고 싶다면? 하나가 아닌 두개로 추가하고 싶다면?
+//	@Override
+//	void fly() {
+//		System.out.println("날 수 없다.");
+//	}
+	
+}
+
+
+package strategy;
+
+public interface IMoveBehaviour {
+	String move();
+}
+
+class Fly implements IMoveBehaviour {
+	public String move() {
+		return "난다";
+	}
+}
+
+class Walk implements IMoveBehaviour {
+	public String move() {
+		return "걷는다";
+	}
+}
+
+class Dash implements IMoveBehaviour {
+	public String move() {
+		return "달린다";
+	}
+}
